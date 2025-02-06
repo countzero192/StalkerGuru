@@ -39,7 +39,7 @@ def download() -> None:
     url = f"{BASEURL}/{file}"
     with requests.get(url, stream=True, headers=HEADERS, proxies=proxy) as req:
         if (req.status_code == 200) and ("removed" not in req.url):
-            print(f"[Downloading images/{file}]")
+            print(f"[Downloading to images/{file}]")
             with open(f"images/{file}", 'wb') as file:
                 shutil.copyfileobj(req.raw, file)
 

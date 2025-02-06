@@ -1,6 +1,13 @@
-from time import sleep
 import requests
 from typing import List
+
+proxy_list = "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt"
+try:
+    with requests.get(proxy_list) as r:
+        with open("http.txt", 'wb') as f:
+            f.write(r.content)
+except Exception as E:
+    print(E)
 
 with open("http.txt", 'r') as file:
     proxies = [i.strip() for i in file]
