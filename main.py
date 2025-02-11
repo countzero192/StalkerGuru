@@ -2,7 +2,6 @@ import requests
 import pickle
 from time import sleep
 import random
-import proxy
 import os
 from string import ascii_letters
 import shutil
@@ -12,7 +11,6 @@ BASEURL = "https://i.imgur.com"
 HEADERS = {
     'User-Agent': "Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
 }
-PROXIES = proxy.get_proxy(True)
 
 used = []
 if os.path.exists("save"):
@@ -35,9 +33,8 @@ def gen_name() -> str:
 
 def download() -> None:
     file = gen_name()
-    proxy = {"http": random.choice(PROXIES)}
     url = f"{BASEURL}/{file}"
-    with requests.get(url, stream=True, headers=HEADERS, proxies=proxy) as req:
+    with requests.get(url, stream=True, headers=HEADERS) as req:
         if (req.status_code == 200) and ("removed" not in req.url):
             print(f"[Downloading to images/{file}]")
             with open(f"images/{file}", 'wb') as file:
